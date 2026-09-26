@@ -3,675 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0b2033">
+    <meta name="description" content="Nala Homecare - Layanan Kesehatan di Rumah">
     <title>Nala Homecare - Layanan Kesehatan di Rumah</title>
-    
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap');
-
-        :root {
-            --primary-blue: #0a5fd0;
-            --primary-blue-deep: #08479f;
-            --secondary-blue: #2a8cff;
-            --accent-cyan: #52d7ff;
-            --ink: #0d2442;
-            --text-dark: #17304f;
-            --text-light: #60748c;
-            --muted: #8191a6;
-            --white: #ffffff;
-            --ice: #f3f8ff;
-            --light-blue: #eef6ff;
-            --light-green: #ecfbf4;
-            --line: rgba(13, 36, 66, 0.09);
-            --shadow-sm: 0 8px 24px rgba(21, 74, 129, 0.08);
-            --shadow-md: 0 18px 55px rgba(21, 74, 129, 0.12);
-            --shadow-lg: 0 30px 90px rgba(10, 76, 149, 0.18);
-            --radius-lg: 28px;
-            --radius-md: 20px;
-            --ease: cubic-bezier(.2,.8,.2,1);
-        }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        html { scroll-behavior: smooth; }
-        body {
-            color: var(--text-dark);
-            line-height: 1.75;
-            overflow-x: hidden;
-            font-family: 'DM Sans', sans-serif;
-            background: #fff;
-            -webkit-font-smoothing: antialiased;
-            text-rendering: optimizeLegibility;
-        }
-        body.no-scroll { overflow: hidden; }
-        img { max-width: 100%; }
-        a { -webkit-tap-highlight-color: transparent; }
-        ::selection { background: rgba(42, 140, 255, .2); color: var(--ink); }
-
-        body::before {
-            content: '';
-            position: fixed;
-            inset: 0;
-            pointer-events: none;
-            background:
-                radial-gradient(circle at 8% 18%, rgba(82,215,255,.09), transparent 25%),
-                radial-gradient(circle at 92% 66%, rgba(42,140,255,.07), transparent 24%),
-                linear-gradient(rgba(23,48,79,.025) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(23,48,79,.025) 1px, transparent 1px);
-            background-size: auto, auto, 40px 40px, 40px 40px;
-            z-index: -1;
-        }
-
-        /* ===== Splash / Opening ===== */
-        #splash-screen {
-            position: fixed;
-            inset: 0;
-            width: 100vw;
-            height: 100vh;
-            display: grid;
-            place-items: center;
-            z-index: 9999;
-            overflow: hidden;
-            background:
-                radial-gradient(circle at 50% 42%, rgba(53, 170, 255, .20), transparent 23%),
-                radial-gradient(circle at 50% 50%, #07356b 0%, #061b34 44%, #020812 100%);
-            transition: opacity 1.25s var(--ease), transform 1.25s var(--ease), filter 1.25s var(--ease);
-            will-change: transform, opacity, filter;
-        }
-        #splash-screen::before,
-        #splash-screen::after {
-            content: '';
-            position: absolute;
-            border-radius: 50%;
-            border: 1px solid rgba(117, 213, 255, .16);
-            inset: 12%;
-            animation: orbit 14s linear infinite;
-        }
-        #splash-screen::after {
-            inset: 22%;
-            border-style: dashed;
-            opacity: .7;
-            animation-direction: reverse;
-            animation-duration: 20s;
-        }
-        #splash-screen.entered {
-            opacity: 0;
-            transform: scale(1.08);
-            filter: blur(12px);
-            pointer-events: none;
-        }
-        .splash-content {
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            position: relative;
-            z-index: 2;
-        }
-        .logo-wrapper {
-            position: relative;
-            display: inline-flex;
-            padding: 10px;
-            border-radius: 30px;
-            animation: splashFloat 4.5s var(--ease) infinite;
-            cursor: pointer;
-        }
-        .logo-wrapper::before {
-            content: '';
-            position: absolute;
-            inset: -18px;
-            border-radius: 36px;
-            background: radial-gradient(circle, rgba(69,202,255,.45), rgba(0,123,255,.10) 42%, transparent 72%);
-            filter: blur(18px);
-            z-index: -1;
-            animation: auraPulse 3.8s ease-in-out infinite;
-        }
-        .logo-wrapper::after {
-            content: '';
-            position: absolute;
-            inset: -3px;
-            border-radius: 28px;
-            padding: 1px;
-            background: linear-gradient(135deg, rgba(255,255,255,.55), rgba(82,215,255,.1), rgba(255,255,255,.3));
-            -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-            -webkit-mask-composite: xor;
-            mask-composite: exclude;
-            pointer-events: none;
-        }
-        .splash-content img {
-            width: 250px;
-            max-width: 66vw;
-            border-radius: 22px;
-            border: 1px solid rgba(255,255,255,.2);
-            box-shadow: 0 30px 70px rgba(0,0,0,.55);
-            position: relative;
-            z-index: 1;
-            transition: transform .45s var(--ease), box-shadow .45s ease;
-        }
-        .logo-wrapper:hover img { transform: translateY(-5px) scale(1.015); box-shadow: 0 34px 80px rgba(0,0,0,.62); }
-        .logo-wrapper.clicked img { transform: scale(.93); box-shadow: 0 15px 30px rgba(0,0,0,.5); }
-        .logo-wrapper.clicked::before { transform: scale(1.18); opacity: 1; }
-        .splash-text {
-            margin-top: 30px;
-            color: rgba(255,255,255,.78);
-            font-family: 'Manrope', sans-serif;
-            font-weight: 500;
-            font-size: .85rem;
-            letter-spacing: .34em;
-            text-transform: uppercase;
-            background: linear-gradient(90deg, rgba(255,255,255,.55), #fff, rgba(255,255,255,.55));
-            background-size: 220% auto;
-            color: transparent;
-            -webkit-background-clip: text;
-            background-clip: text;
-            animation: shineText 3s linear infinite, fadeInLuxury 1.1s ease-out .5s both;
-        }
-
-        @keyframes splashFloat { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
-        @keyframes auraPulse { 0%,100%{transform:scale(.96);opacity:.52} 50%{transform:scale(1.05);opacity:.9} }
-        @keyframes shineText { to { background-position: 220% center; } }
-        @keyframes fadeInLuxury { from{opacity:0;transform:translateY(12px);letter-spacing:.2em} to{opacity:1;transform:translateY(0);letter-spacing:.34em} }
-        @keyframes orbit { to { transform: rotate(360deg); } }
-
-        /* ===== Top Progress ===== */
-        #page-progress {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 0;
-            height: 3px;
-            z-index: 3000;
-            background: linear-gradient(90deg, var(--secondary-blue), var(--accent-cyan));
-            box-shadow: 0 0 18px rgba(82,215,255,.7);
-            transition: width .08s linear;
-        }
-
-        /* ===== Navigation ===== */
-        nav {
-            position: sticky;
-            top: 12px;
-            z-index: 1000;
-            width: min(1180px, calc(100% - 28px));
-            margin: 12px auto 0;
-            padding: 13px 16px 13px 22px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 18px;
-            border: 1px solid rgba(255,255,255,.72);
-            background: rgba(255,255,255,.82);
-            backdrop-filter: blur(18px) saturate(145%);
-            -webkit-backdrop-filter: blur(18px) saturate(145%);
-            border-radius: 999px;
-            box-shadow: 0 14px 44px rgba(24, 71, 118, .10);
-            transition: box-shadow .35s ease, transform .35s var(--ease), background .35s ease;
-        }
-        nav.scrolled {
-            background: rgba(255,255,255,.93);
-            box-shadow: 0 18px 50px rgba(24, 71, 118, .14);
-        }
-        nav .logo {
-            font-family: 'Manrope', sans-serif;
-            font-size: 1.02rem;
-            font-weight: 800;
-            color: var(--primary-blue-deep);
-            letter-spacing: -.02em;
-            white-space: nowrap;
-        }
-        nav .nav-links {
-            list-style: none;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
-        nav .nav-links a {
-            position: relative;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: 9px 13px;
-            color: #516980;
-            text-decoration: none;
-            font-size: .84rem;
-            font-weight: 700;
-            border-radius: 999px;
-            transition: color .25s ease, background .25s ease, transform .25s var(--ease);
-        }
-        nav .nav-links a::after {
-            content: '';
-            position: absolute;
-            left: 50%; bottom: 4px;
-            width: 0;
-            height: 2px;
-            border-radius: 99px;
-            background: linear-gradient(90deg, var(--secondary-blue), var(--accent-cyan));
-            transform: translateX(-50%);
-            transition: width .25s var(--ease);
-        }
-        nav .nav-links a:hover,
-        nav .nav-links a.active { color: var(--primary-blue); background: rgba(42,140,255,.08); }
-        nav .nav-links a:hover::after,
-        nav .nav-links a.active::after { width: 32px; }
-        nav .nav-links a:active { transform: translateY(1px) scale(.98); }
-
-        /* ===== General Sections ===== */
-        section { position: relative; overflow: hidden; scroll-margin-top: 100px; }
-        .container {
-            width: min(1160px, calc(100% - 40px));
-            margin: 0 auto;
-            padding: 100px 20px;
-            text-align: center;
-        }
-        h2, .hero h1 {
-            font-family: 'Manrope', sans-serif;
-            letter-spacing: -.045em;
-            line-height: 1.12;
-        }
-        h2 {
-            color: var(--primary-blue-deep);
-            font-size: clamp(2rem, 4vw, 3rem);
-            margin-bottom: 18px;
-        }
-        h2::after {
-            content: '';
-            display: block;
-            width: 48px;
-            height: 4px;
-            margin: 16px auto 0;
-            border-radius: 99px;
-            background: linear-gradient(90deg, var(--secondary-blue), var(--accent-cyan));
-        }
-        .section-subtitle {
-            color: var(--text-light);
-            width: min(760px, 100%);
-            margin: 0 auto 48px;
-            font-size: 1rem;
-        }
-        .bg-light-blue {
-            background:
-                radial-gradient(circle at 10% 10%, rgba(82,215,255,.10), transparent 30%),
-                linear-gradient(180deg, #f3f8ff, #edf6ff);
-        }
-        .bg-primary-blue {
-            background:
-                radial-gradient(circle at 15% 20%, rgba(82,215,255,.16), transparent 27%),
-                radial-gradient(circle at 90% 80%, rgba(30,119,255,.24), transparent 30%),
-                linear-gradient(145deg, #0a58bb, #08479f 62%, #063b83);
-        }
-        .text-white h2, .text-white p, .text-white li, .text-white h3 { color: var(--white); }
-        .text-white h2::after { background: linear-gradient(90deg, #fff, rgba(255,255,255,.35)); }
-
-        /* ===== Hero ===== */
-        .hero {
-            min-height: 760px;
-            display: grid;
-            place-items: center;
-            padding: 88px 20px 120px;
-            color: var(--white);
-            background:
-                linear-gradient(135deg, rgba(4,58,116,.90), rgba(0,123,255,.55)),
-                url('hero-homecare.png') center/cover no-repeat;
-        }
-        .hero::before {
-            content: '';
-            position: absolute;
-            width: 520px; height: 520px;
-            border-radius: 50%;
-            right: -140px; top: -120px;
-            border: 1px solid rgba(255,255,255,.16);
-            box-shadow: 0 0 0 48px rgba(255,255,255,.03), 0 0 0 96px rgba(255,255,255,.025);
-        }
-        .hero::after {
-            content: '';
-            position: absolute;
-            inset: auto 0 0;
-            height: 150px;
-            background: linear-gradient(to bottom, transparent, #fff);
-            pointer-events: none;
-        }
-        .hero-card {
-            width: min(900px, 100%);
-            padding: clamp(34px, 6vw, 60px);
-            position: relative;
-            z-index: 1;
-            border-radius: 32px;
-            text-align: center;
-            background: linear-gradient(145deg, rgba(255,255,255,.96), rgba(244,252,255,.91));
-            border: 1px solid rgba(255,255,255,.86);
-            box-shadow: var(--shadow-lg);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            transform: translateY(18px);
-            animation: heroCardIn .9s var(--ease) .1s forwards;
-        }
-        .hero-card::before {
-            content: '';
-            position: absolute;
-            inset: -1px;
-            border-radius: inherit;
-            background: linear-gradient(120deg, rgba(82,215,255,.35), transparent 30%, rgba(42,140,255,.18), transparent 70%);
-            opacity: .8;
-            pointer-events: none;
-            mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-            -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-            padding: 1px;
-            -webkit-mask-composite: xor;
-            mask-composite: exclude;
-        }
-        .hero h1 {
-            color: var(--primary-blue-deep);
-            font-size: clamp(2.25rem, 5vw, 4rem);
-            margin-bottom: 24px;
-        }
-        .hero p {
-            color: #526b84;
-            font-size: 1rem;
-            max-width: 820px;
-            margin: 0 auto 16px;
-        }
-        .hero p:last-of-type { margin-bottom: 0; }
-        .btn {
-            position: relative;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-            margin-top: 30px;
-            padding: 14px 24px;
-            border: 0;
-            border-radius: 999px;
-            background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
-            color: var(--white);
-            text-decoration: none;
-            font-size: .92rem;
-            font-weight: 800;
-            box-shadow: 0 14px 28px rgba(10,95,208,.28);
-            transition: transform .28s var(--ease), box-shadow .28s ease;
-        }
-        .btn::before {
-            content: '';
-            position: absolute;
-            top: -20%; left: -80%;
-            width: 50%; height: 140%;
-            transform: skewX(-20deg);
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,.5), transparent);
-            transition: left .65s ease;
-        }
-        .btn:hover { transform: translateY(-3px); box-shadow: 0 19px 34px rgba(10,95,208,.34); }
-        .btn:hover::before { left: 135%; }
-        .btn:active { transform: translateY(-1px) scale(.99); }
-        @keyframes heroCardIn { from{opacity:0; transform:translateY(35px) scale(.985)} to{opacity:1; transform:translateY(0) scale(1)} }
-
-        /* ===== About ===== */
-        .about-row { display: flex; align-items: center; gap: 64px; text-align: left; }
-        .about-text { flex: 1.1; }
-        .about-text h2::after { margin-left: 0; }
-        .about-text p { margin-bottom: 18px; color: #5e7288; }
-        .about-image {
-            flex: .9;
-            max-width: 520px;
-            border-radius: 30px;
-            overflow: hidden;
-            box-shadow: var(--shadow-md);
-            transform: rotate(2deg);
-            border: 10px solid #fff;
-            position: relative;
-        }
-        .about-image::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(180deg, transparent 60%, rgba(7,48,99,.18));
-            pointer-events: none;
-        }
-        .about-image img { width: 100%; height: 100%; min-height: 360px; object-fit: cover; display: block; transition: transform .8s var(--ease); }
-        .about-image:hover img { transform: scale(1.05); }
-
-        /* ===== Vision Mission ===== */
-        .dual-col { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 26px; text-align: left; }
-        .dual-col > div {
-            position: relative;
-            background: rgba(255,255,255,.88);
-            padding: 38px;
-            border: 1px solid rgba(42,140,255,.09);
-            border-radius: 24px;
-            box-shadow: var(--shadow-sm);
-            overflow: hidden;
-            transition: transform .35s var(--ease), box-shadow .35s ease, border-color .35s ease;
-        }
-        .dual-col > div::before {
-            content: '';
-            position: absolute;
-            width: 140px; height: 140px;
-            border-radius: 50%;
-            right: -50px; top: -50px;
-            background: radial-gradient(circle, rgba(82,215,255,.14), transparent 70%);
-        }
-        .dual-col > div:hover { transform: translateY(-7px); box-shadow: var(--shadow-md); border-color: rgba(42,140,255,.18); }
-        .dual-col h3 { color: var(--primary-blue); font-family: 'Manrope',sans-serif; font-size: 1.45rem; margin-bottom: 12px; }
-        .dual-col p, .dual-col li { color: #5d7188; }
-        .misi ul { list-style: none; }
-        .misi li { position: relative; padding-left: 22px; margin-bottom: 9px; }
-        .misi li::before { content: ''; position: absolute; left: 0; top: .78em; width: 7px; height: 7px; border-radius: 50%; background: linear-gradient(135deg, var(--secondary-blue), var(--accent-cyan)); }
-
-        /* ===== Image Feature Strip ===== */
-        #gelembung .container { padding-bottom: 108px; }
-        #gelembung h3 { font-family: 'Manrope', sans-serif; font-size: clamp(1.55rem, 3vw, 2.3rem); letter-spacing: -.035em; }
-        .grid-bubbles { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 24px; margin-top: 40px; }
-        .bubble {
-            height: 290px;
-            border-radius: 26px;
-            overflow: hidden;
-            border: 1px solid rgba(255,255,255,.16);
-            box-shadow: 0 20px 50px rgba(1,35,79,.22);
-            position: relative;
-            transition: transform .5s var(--ease), box-shadow .5s ease;
-        }
-        .bubble::after { content: ''; position:absolute; inset:0; background:linear-gradient(180deg,transparent 40%,rgba(3,24,52,.36)); pointer-events:none; }
-        .bubble img { width:100%; height:100%; object-fit:cover; display:block; transition:transform .7s var(--ease); }
-        .bubble:hover { transform: translateY(-8px); box-shadow: 0 28px 66px rgba(1,35,79,.32); }
-        .bubble:hover img { transform: scale(1.07); }
-
-        /* ===== Cards / Services ===== */
-        .grid-cards { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 22px; margin-top: 36px; }
-        .card {
-            position: relative;
-            overflow: hidden;
-            background: rgba(255,255,255,.91);
-            padding: 30px 26px;
-            border: 1px solid var(--line);
-            border-radius: 22px;
-            box-shadow: var(--shadow-sm);
-            text-align: left;
-            transition: transform .38s var(--ease), box-shadow .38s ease, border-color .38s ease;
-        }
-        .card::before {
-            content: '';
-            position: absolute;
-            inset: 0 auto auto 0;
-            width: 100%; height: 3px;
-            background: linear-gradient(90deg, var(--secondary-blue), var(--accent-cyan));
-            transform: scaleX(.2);
-            transform-origin: left;
-            transition: transform .4s var(--ease);
-        }
-        .card:hover { transform: translateY(-8px); box-shadow: var(--shadow-md); border-color: rgba(42,140,255,.16); }
-        .card:hover::before { transform: scaleX(1); }
-.card::after, .dual-col > div::after, .hero-card::after { content:''; position:absolute; inset:0; pointer-events:none; border-radius:inherit; background:radial-gradient(240px circle at var(--mx,50%) var(--my,50%), rgba(82,215,255,.10), transparent 65%); opacity:0; transition:opacity .35s ease; }
-.card:hover::after, .dual-col > div:hover::after, .hero-card:hover::after { opacity:1; }
-        .card h4 { color: var(--primary-blue-deep); font-family: 'Manrope',sans-serif; font-size: 1.05rem; line-height: 1.35; margin-bottom: 12px; }
-        .card p { color: #657a91; margin-bottom: 6px; }
-
-        .service-row { display: grid; grid-template-columns: 1fr 1fr; gap: 26px; margin-top: 42px; text-align: left; }
-        .service-group { display: flex; flex-direction: column; gap: 22px; }
-        .service-image {
-            border-radius: 24px;
-            overflow: hidden;
-            border: 8px solid #fff;
-            box-shadow: var(--shadow-md);
-            position: relative;
-        }
-        .service-image::after { content:''; position:absolute; inset:0; background:linear-gradient(180deg,transparent 55%,rgba(3,24,52,.14)); pointer-events:none; }
-        .service-image img { width:100%; height:260px; object-fit:cover; display:block; transition:transform .7s var(--ease); }
-        .service-image:hover img { transform:scale(1.05); }
-        #layanan .container > p:last-child {
-            width: min(880px, 100%);
-            margin-left: auto;
-            margin-right: auto;
-            padding: 16px 20px;
-            border-radius: 14px;
-            background: var(--light-green);
-            color: #18754a !important;
-            box-shadow: inset 0 0 0 1px rgba(26,145,91,.09);
-        }
-
-        /* ===== Advantages ===== */
-        #keunggulan .container { padding-top: 105px; padding-bottom: 105px; }
-        .check-list { list-style: none; text-align: left; width: min(760px, 100%); margin: 40px auto 0; display: grid; gap: 15px; }
-        .check-list li {
-            position: relative;
-            padding: 18px 22px 18px 58px;
-            border: 1px solid rgba(255,255,255,.14);
-            background: rgba(255,255,255,.07);
-            border-radius: 16px;
-            color: #fff;
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            transition: transform .28s var(--ease), background .28s ease, border-color .28s ease;
-        }
-        .check-list li::before {
-            content: '✓';
-            position: absolute;
-            left: 18px; top: 50%;
-            width: 25px; height: 25px;
-            transform: translateY(-50%);
-            display: grid; place-items: center;
-            border-radius: 50%;
-            color: var(--primary-blue-deep);
-            background: #fff;
-            font-size: .76rem;
-            font-weight: 900;
-            box-shadow: 0 8px 18px rgba(0,0,0,.12);
-        }
-        .check-list li:hover { transform: translateX(6px); background: rgba(255,255,255,.11); border-color: rgba(255,255,255,.25); }
-
-        /* ===== Testimonials ===== */
-        #testimoni .card { min-height: 205px; display:flex; flex-direction:column; justify-content:space-between; }
-        .author { color: var(--primary-blue) !important; }
-
-        /* ===== Contact ===== */
-        #kontak .container { padding-bottom: 88px; }
-        .contact-info {
-            width: min(720px, 100%);
-            text-align: left;
-            margin: 34px auto 0;
-            padding: 22px 24px;
-            border: 1px solid var(--line);
-            border-radius: 20px;
-            background: rgba(255,255,255,.88);
-            box-shadow: var(--shadow-sm);
-        }
-        .contact-info p { margin-bottom: 11px; color: #5d7188; }
-        .contact-info p:last-child { margin-bottom: 0; }
-        .footer-buttons { display: flex; justify-content: center; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
-        .footer-btn {
-            padding: 12px 18px;
-            background: #fff;
-            color: var(--primary-blue-deep);
-            border: 1px solid rgba(42,140,255,.14);
-            text-decoration: none;
-            border-radius: 999px;
-            font-weight: 800;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            box-shadow: 0 10px 24px rgba(24,71,118,.08);
-            transition: transform .28s var(--ease), box-shadow .28s ease, background .28s ease;
-        }
-        .footer-btn:hover { transform: translateY(-3px); box-shadow: 0 16px 30px rgba(24,71,118,.13); background: var(--light-blue); }
-        footer {
-            position: relative;
-            background: #062348;
-            color: rgba(255,255,255,.72);
-            text-align: center;
-            padding: 28px 20px;
-            font-size: .86rem;
-            overflow: hidden;
-        }
-        footer::before { content:''; position:absolute; inset:0; background: radial-gradient(circle at 50% -30%, rgba(82,215,255,.22), transparent 35%); pointer-events:none; }
-
-        /* ===== Reveal Animation ===== */
-        .reveal-ready {
-            opacity: 0;
-            transform: translateY(28px);
-            transition: opacity .85s ease, transform .85s var(--ease);
-        }
-        .reveal-ready.is-visible { opacity: 1; transform: translateY(0); }
-        .reveal-delay-1 { transition-delay: .08s; }
-        .reveal-delay-2 { transition-delay: .16s; }
-        .reveal-delay-3 { transition-delay: .24s; }
-
-        /* ===== Responsive ===== */
-        @media (max-width: 980px) {
-            nav { border-radius: 24px; align-items:flex-start; flex-direction:column; padding: 16px 18px; }
-            nav .nav-links { width:100%; overflow-x:auto; justify-content:flex-start; padding-bottom:2px; scrollbar-width:none; }
-            nav .nav-links::-webkit-scrollbar { display:none; }
-            .about-row { gap: 42px; }
-            .grid-cards { grid-template-columns: 1fr 1fr; }
-        }
-        @media (max-width: 768px) {
-            .container { width: min(100% - 28px, 680px); padding: 76px 14px; }
-            nav { top: 8px; width: calc(100% - 16px); margin-top: 8px; }
-            nav .logo { font-size: 1rem; }
-            nav .nav-links a { padding: 8px 11px; font-size: .78rem; }
-            .hero { min-height: 690px; padding: 70px 14px 105px; background-position: 52% center; }
-            .hero-card { padding: 30px 22px; border-radius: 24px; }
-            .hero h1 { font-size: clamp(2rem, 10vw, 3rem); }
-            .hero p { font-size: .94rem; }
-            .about-row, .service-row, .dual-col { grid-template-columns: 1fr; display: grid; }
-            .about-row { gap: 34px; }
-            .about-image { max-width:none; transform: rotate(0deg); border-width: 7px; }
-            .about-image img { min-height: 260px; }
-            .grid-bubbles { grid-template-columns: 1fr; gap: 18px; }
-            .bubble { height: 230px; }
-            .grid-cards { grid-template-columns: 1fr; gap: 18px; }
-            .service-image img { height: 220px; }
-            .check-list { margin-top: 28px; }
-            .check-list li { padding: 16px 16px 16px 53px; }
-            .contact-info { padding: 18px; }
-            .footer-buttons { flex-direction: column; align-items: stretch; }
-            .footer-btn { justify-content: center; }
-        }
-        @media (max-width: 480px) {
-            .splash-content img { width: 210px; }
-            .splash-text { font-size: .7rem; letter-spacing: .25em; }
-            .hero-card { padding: 27px 18px; }
-            h2 { font-size: 2rem; }
-            .dual-col > div { padding: 28px 24px; }
-            .card { padding: 25px 21px; }
-        }
-        @media (prefers-reduced-motion: reduce) {
-            *, *::before, *::after {
-                animation-duration: .01ms !important;
-                animation-iteration-count: 1 !important;
-                transition-duration: .01ms !important;
-                scroll-behavior: auto !important;
-            }
-            .reveal-ready { opacity: 1; transform: none; }
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body class="no-scroll">
-
-    <div id="splash-screen">
+    <div id="splash-screen" aria-label="Nala Homecare">
         <div class="splash-content">
             <div class="logo-wrapper" id="btn-masuk-wrapper">
-                <img src="IMG-20260309-WA0036.jpg" alt="Logo Masuk Nala Homecare" id="btn-masuk">
+                <img id="btn-masuk" src="IMG-20260309-WA0036.jpg" alt="Logo Masuk Nala Homecare">
             </div>
             <p class="splash-text">Ketuk Untuk Masuk</p>
         </div>
     </div>
 
-    <nav>
-        <div class="logo">Nala Homecare</div>
+    <nav aria-label="Navigasi utama">
+        <a href="#beranda" class="nav-brand" aria-label="Nala Homecare">
+            <span class="brand-mark" aria-hidden="true"></span>
+            <span class="logo">Nala Homecare</span>
+        </a>
         <ul class="nav-links">
             <li><a href="#beranda">Beranda</a></li>
             <li><a href="#tentang">Tentang Kami</a></li>
@@ -679,237 +30,181 @@
             <li><a href="#keunggulan">Keunggulan</a></li>
             <li><a href="#kontak">Kontak</a></li>
         </ul>
+        <button class="menu-toggle" type="button" aria-label="Buka menu navigasi" aria-expanded="false">
+            <span></span>
+        </button>
     </nav>
 
-    <section id="beranda" class="hero">
-        <div class="hero-card">
-            <h1>Selamat datang di Nala Homecare</h1>
-            <p>Nala Homecare merupakan layanan kesehatan berbasis kunjungan rumah (home care) yang hadir sebagai solusi praktis, aman, dan terpercaya bagi masyarakat yang membutuhkan perawatan tanpa harus datang ke fasilitas kesehatan. Kami memahami bahwa tidak semua kondisi memungkinkan pasien untuk bepergian, sehingga layanan kesehatan di rumah menjadi pilihan yang lebih nyaman dan efisien.</p>
-            <p>Dengan mengedepankan profesionalisme, ketepatan tindakan, serta pendekatan yang humanis, Nala Homecare berkomitmen untuk memberikan pelayanan terbaik demi menunjang kesehatan dan kualitas hidup pasien.</p>
-            <a href="#layanan" class="btn">Lihat Layanan Kami</a>
-        </div>
-    </section>
+    <main>
+        <section class="hero" id="beranda">
+            <div class="hero-inner">
+                <div class="hero-copy">
+                    <h1>Selamat datang di Nala Homecare</h1>
+                    <p>Nala Homecare merupakan layanan kesehatan berbasis kunjungan rumah (home care) yang hadir sebagai solusi praktis, aman, dan terpercaya bagi masyarakat yang membutuhkan perawatan tanpa harus datang ke fasilitas kesehatan. Kami memahami bahwa tidak semua kondisi memungkinkan pasien untuk bepergian, sehingga layanan kesehatan di rumah menjadi pilihan yang lebih nyaman dan efisien.</p>
+                    <p>Dengan mengedepankan profesionalisme, ketepatan tindakan, serta pendekatan yang humanis, Nala Homecare berkomitmen untuk memberikan pelayanan terbaik demi menunjang kesehatan dan kualitas hidup pasien.</p>
+                    <div class="hero-action">
+                        <a class="btn" href="#layanan">
+                            <span>Lihat Layanan Kami</span>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true">
+                                <path d="M5 12h13M13 6l6 6-6 6"></path>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
 
-    <section id="tentang">
-        <div class="container about-row">
-            <div class="about-text">
-                <h2>Tentang Kami</h2>
-                <p>Nala Homecare adalah penyedia layanan perawatan kesehatan di rumah yang berfokus pada tindakan perawatan dasar yang aman dan efektif. Kami berupaya memberikan pelayanan yang tidak hanya berorientasi pada tindakan medis, tetapi juga memperhatikan kenyamanan, ketenangan, serta kebutuhan individu setiap pasien.</p>
-                <p>Kami percaya bahwa proses perawatan yang dilakukan di lingkungan rumah dapat memberikan dampak positif terhadap pemulihan pasien, baik secara fisik maupun psikologis. Oleh karena itu, setiap layanan kami dilakukan dengan standar operasional yang jelas serta didukung oleh tenaga yang kompeten dan bertanggung jawab.</p>
+                <aside class="hero-panel" aria-hidden="true">
+                    <div class="panel-mark">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+                            <path d="M12 21s7-4.35 7-10V5l-7-2-7 2v6c0 5.65 7 10 7 10Z"></path>
+                            <path d="M8.5 12.5h7M12 9v7"></path>
+                        </svg>
+                    </div>
+                    <img src="IMG-20260309-WA0036.jpg" alt="" loading="eager">
+                </aside>
             </div>
-            <div class="about-image">
-                <img src="11062b_211545baa4174deeb6a41ff73188630b~mv2.jpg" alt="Tentang Kami Nala Homecare">
-            </div>
-        </div>
-    </section>
+        </section>
 
-    <section id="visi-misi" class="bg-light-blue">
-        <div class="container dual-col">
-            <div class="visi">
-                <h3>Visi</h3>
-                <p>Menjadi layanan home care yang terpercaya, profesional, dan berorientasi pada kualitas pelayanan kesehatan di rumah.</p>
+        <section id="tentang">
+            <div class="container about-row">
+                <div class="about-image">
+                    <img src="11062b_211545baa4174deeb6a41ff73188630b~mv2.jpg" alt="Tentang Kami Nala Homecare" loading="lazy">
+                </div>
+                <div class="about-text">
+                    <h2>Tentang Kami</h2>
+                    <p>Nala Homecare adalah penyedia layanan perawatan kesehatan di rumah yang berfokus pada tindakan perawatan dasar yang aman dan efektif. Kami berupaya memberikan pelayanan yang tidak hanya berorientasi pada tindakan medis, tetapi juga memperhatikan kenyamanan, ketenangan, serta kebutuhan individu setiap pasien.</p>
+                    <p>Kami percaya bahwa proses perawatan yang dilakukan di lingkungan rumah dapat memberikan dampak positif terhadap pemulihan pasien, baik secara fisik maupun psikologis. Oleh karena itu, setiap layanan kami dilakukan dengan standar operasional yang jelas serta didukung oleh tenaga yang kompeten dan bertanggung jawab.</p>
+                </div>
             </div>
-            <div class="misi">
-                <h3>Misi</h3>
-                <ul>
-                    <li>Memberikan pelayanan kesehatan yang aman, tepat, dan sesuai standar</li>
-                    <li>Mengutamakan kenyamanan dan kepuasan pasien</li>
-                    <li>Menyediakan layanan yang mudah diakses oleh masyarakat</li>
-                    <li>Meningkatkan kualitas pelayanan secara berkelanjutan</li>
+        </section>
+
+        <section class="bg-light-blue" id="visi-misi">
+            <div class="container dual-col">
+                <div class="visi">
+                    <h3>Visi</h3>
+                    <p>Menjadi layanan home care yang terpercaya, profesional, dan berorientasi pada kualitas pelayanan kesehatan di rumah.</p>
+                </div>
+                <div class="misi">
+                    <h3>Misi</h3>
+                    <ul>
+                        <li>Memberikan pelayanan kesehatan yang aman, tepat, dan sesuai standar</li>
+                        <li>Mengutamakan kenyamanan dan kepuasan pasien</li>
+                        <li>Menyediakan layanan yang mudah diakses oleh masyarakat</li>
+                        <li>Meningkatkan kualitas pelayanan secara berkelanjutan</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="bg-primary-blue text-white" id="gelembung">
+            <div class="container">
+                <h3>Tim Kompeten dan Penuh Kasih Sayang</h3>
+                <div class="image-gallery">
+                    <div class="bubble"><img src="Mengenal-Home-Care-dan-Daftar-Layanan-Serta-Manfaatnya.jpg.webp" alt="Layanan Homecare" loading="lazy"></div>
+                    <div class="bubble"><img src="Seputar-Demam-pada-Anak-Orang-Tua-Wajib-Tahu-scaled.jpg" alt="Demam pada Anak" loading="lazy"></div>
+                    <div class="bubble"><img src="023554800_1533262906-Hati-Hati-5-Penyakit-Ini-Berawal-dari-Demam-By-ArtOfPhotos-Shutterstock.jpg" alt="Penyakit Demam" loading="lazy"></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="layanan">
+            <div class="container">
+                <h2>Layanan Kami</h2>
+                <p class="section-subtitle">Kami menyediakan layanan terapi kompres yang dapat membantu mengurangi berbagai keluhan seperti nyeri, pembengkakan, serta peradangan.</p>
+
+                <div class="service-row">
+                    <div class="service-group">
+                        <div class="card">
+                            <h4>1. Kompres Hangat Basah</h4>
+                            <p>Digunakan untuk membantu melancarkan peredaran darah, mengurangi kekakuan otot, serta memberikan efek relaksasi pada area tubuh tertentu.</p>
+                        </div>
+                        <div class="card">
+                            <h4>2. Kompres Hangat Kering</h4>
+                            <p>Berfungsi untuk meredakan ketegangan otot dan memberikan kenyamanan, terutama pada kondisi nyeri ringan hingga sedang.</p>
+                        </div>
+                        <div class="service-image">
+                            <img src="demam pada anak.jpg" alt="Penanganan Demam" loading="lazy">
+                        </div>
+                    </div>
+
+                    <div class="service-group">
+                        <div class="service-image">
+                            <img src="Seputar-Demam-pada-Anak-Orang-Tua-Wajib-Tahu-scaled.jpg" alt="Edukasi Demam" loading="lazy">
+                        </div>
+                        <div class="card">
+                            <h4>3. Kompres Dingin Basah</h4>
+                            <p>Digunakan untuk mengurangi pembengkakan dan peradangan, serta membantu meredakan nyeri akibat cedera ringan.</p>
+                        </div>
+                        <div class="card">
+                            <h4>4. Kompres Dingin Kering</h4>
+                            <p>Efektif untuk penanganan awal pada nyeri akut dan kondisi tertentu yang memerlukan penekanan peradangan.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <p class="service-note">Seluruh tindakan dilakukan dengan memperhatikan standar kebersihan, keamanan, dan prosedur pelayanan yang berlaku.</p>
+            </div>
+        </section>
+
+        <section id="keunggulan" class="bg-primary-blue text-white">
+            <div class="container">
+                <h2>Keunggulan Kami</h2>
+                <ul class="check-list">
+                    <li>Layanan kesehatan langsung ke rumah pasien</li>
+                    <li>Didukung oleh tenaga yang kompeten dan profesional</li>
+                    <li>Prosedur pelayanan yang aman dan terstandar</li>
+                    <li>Proses pemesanan yang mudah dan responsif</li>
+                    <li>Mengutamakan kenyamanan, keamanan, dan kepuasan pasien</li>
+                    <li>Pelayanan yang ramah, cepat, dan terpercaya</li>
                 </ul>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <section id="gelembung" class="bg-primary-blue text-white">
-        <div class="container">
-            <h3>Tim Kompeten dan Penuh Kasih Sayang</h3>
-            <div class="grid-bubbles">
-                <div class="bubble"><img src="Mengenal-Home-Care-dan-Daftar-Layanan-Serta-Manfaatnya.jpg.webp" alt="Layanan Homecare"></div>
-                <div class="bubble"><img src="Seputar-Demam-pada-Anak-Orang-Tua-Wajib-Tahu-scaled.jpg" alt="Demam pada Anak"></div>
-                <div class="bubble"><img src="023554800_1533262906-Hati-Hati-5-Penyakit-Ini-Berawal-dari-Demam-By-ArtOfPhotos-Shutterstock.jpg" alt="Penyakit Demam"></div>
-            </div>
-        </div>
-    </section>
-
-    <section id="layanan">
-        <div class="container">
-            <h2>Layanan Kami</h2>
-            <p class="section-subtitle">Kami menyediakan layanan terapi kompres yang dapat membantu mengurangi berbagai keluhan seperti nyeri, pembengkakan, serta peradangan.</p>
-            
-            <div class="service-row">
-                <div class="service-group">
+        <section id="testimoni" class="bg-light-blue">
+            <div class="container">
+                <h2>Testimoni Pasien</h2>
+                <p class="section-subtitle">Berikut beberapa pengalaman pasien yang telah menggunakan layanan Nala Homecare:</p>
+                <div class="grid-cards">
                     <div class="card">
-                        <h4>1. Kompres Hangat Basah</h4>
-                        <p>Digunakan untuk membantu melancarkan peredaran darah, mengurangi kekakuan otot, serta memberikan efek relaksasi pada area tubuh tertentu.</p>
+                        <p>“Pelayanan sangat memuaskan. Petugas datang tepat waktu dan sangat ramah. Setelah melakukan kompres hangat, nyeri yang saya rasakan berkurang secara signifikan.”</p>
+                        <span class="author">— Ibu Siti, 45 tahun</span>
                     </div>
                     <div class="card">
-                        <h4>2. Kompres Hangat Kering</h4>
-                        <p>Berfungsi untuk meredakan ketegangan otot dan memberikan kenyamanan, terutama pada kondisi nyeri ringan hingga sedang.</p>
-                    </div>
-                    <div class="service-image">
-                        <img src="demam pada anak.jpg" alt="Penanganan Demam">
-                    </div>
-                </div>
-                <div class="service-group">
-                    <div class="service-image">
-                        <img src="Seputar-Demam-pada-Anak-Orang-Tua-Wajib-Tahu-scaled.jpg" alt="Edukasi Demam">
+                        <p>“Saya merasa sangat terbantu dengan adanya layanan ini. Tidak perlu keluar rumah, tapi tetap mendapatkan perawatan yang baik yang profesional.”</p>
+                        <span class="author">— Bapak Andi, 52 tahun</span>
                     </div>
                     <div class="card">
-                        <h4>3. Kompres Dingin Basah</h4>
-                        <p>Digunakan untuk mengurangi pembengkakan dan peradangan, serta membantu meredakan nyeri akibat cedera ringan.</p>
-                    </div>
-                    <div class="card">
-                        <h4>4. Kompres Dingin Kering</h4>
-                        <p>Efektif untuk penanganan awal pada nyeri akut dan kondisi tertentu yang memerlukan penekanan peradangan.</p>
+                        <p>“Pelayanannya cepat dan komunikatif. Prosesnya juga nyaman dan membuat saya lebih tenang selama perawatan.”</p>
+                        <span class="author">— Ibu Rina, 38 tahun</span>
                     </div>
                 </div>
             </div>
-            
-            <p style="margin-top: 30px; font-weight: 600; color: var(--primary-blue);">Seluruh tindakan dilakukan dengan memperhatikan standar kebersihan, keamanan, dan prosedur pelayanan yang berlaku.</p>
-        </div>
-    </section>
+        </section>
 
-    <section id="keunggulan" class="bg-primary-blue text-white">
-        <div class="container">
-            <h2>Keunggulan Kami</h2>
-            <ul class="check-list">
-                <li>Layanan kesehatan langsung ke rumah pasien</li>
-                <li>Didukung oleh tenaga yang kompeten dan profesional</li>
-                <li>Prosedur pelayanan yang aman dan terstandar</li>
-                <li>Proses pemesanan yang mudah dan responsif</li>
-                <li>Mengutamakan kenyamanan, keamanan, dan kepuasan pasien</li>
-                <li>Pelayanan yang ramah, cepat, dan terpercaya</li>
-            </ul>
-        </div>
-    </section>
+        <section id="kontak">
+            <div class="container">
+                <h2>Kontak Kami</h2>
+                <p>Untuk informasi lebih lanjut dan pemesanan layanan, silakan menghubungi:</p>
 
-    <section id="testimoni" class="bg-light-blue">
-        <div class="container">
-            <h2>Testimoni Pasien</h2>
-            <p class="section-subtitle">Berikut beberapa pengalaman pasien yang telah menggunakan layanan Nala Homecare:</p>
-            <div class="grid-cards">
-                <div class="card">
-                    <p>“Pelayanan sangat memuaskan. Petugas datang tepat waktu dan sangat ramah. Setelah melakukan kompres hangat, nyeri yang saya rasakan berkurang secara signifikan.”</p>
-                    <span class="author" style="display:block; margin-top:15px; font-weight:600; color:var(--secondary-blue);">— Ibu Siti, 45 tahun</span>
+                <div class="contact-info">
+                    <p><span class="icon-shell" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M6.6 3.5h3l1.2 4-2 1.7a14.4 14.4 0 0 0 6 6l1.7-2 4 1.2v3c0 .9-.7 1.6-1.6 1.6C11 19 5 13 5 5.1 5 4.2 5.7 3.5 6.6 3.5Z"></path></svg></span>0897-6277-2222</p>
+                    <p><span class="icon-shell" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="8.5"></circle><path d="M3.7 12h16.6M12 3.5a13.2 13.2 0 0 1 0 17M12 3.5a13.2 13.2 0 0 0 0 17"></path></svg></span>www.nalahomecare.com</p>
+                    <p><span class="icon-shell" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 5.5A1.5 1.5 0 0 1 5.5 4h13A1.5 1.5 0 0 1 20 5.5v9A1.5 1.5 0 0 1 18.5 16H9l-4.5 4V5.5Z"></path><path d="m7 7 5 4 5-4"></path></svg></span>nalahomecare@gmail.com</p>
+                    <p><span class="icon-shell" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 20s6-5.1 6-10A6 6 0 1 0 6 10c0 4.9 6 10 6 10Z"></path><circle cx="12" cy="10" r="2"></circle></svg></span>Jln. Cilentah No. 30, Kel. Burangrang, Kec. Lengkong Kota Bandung, Jawa Barat.</p>
                 </div>
-                <div class="card">
-                    <p>“Saya merasa sangat terbantu dengan adanya layanan ini. Tidak perlu keluar rumah, tapi tetap mendapatkan perawatan yang baik yang profesional.”</p>
-                    <span class="author" style="display:block; margin-top:15px; font-weight:600; color:var(--secondary-blue);">— Bapak Andi, 52 tahun</span>
-                </div>
-                <div class="card">
-                    <p>“Pelayanannya cepat dan komunikatif. Prosesnya juga nyaman dan membuat saya lebih tenang selama perawatan.”</p>
-                    <span class="author" style="display:block; margin-top:15px; font-weight:600; color:var(--secondary-blue);">— Ibu Rina, 38 tahun</span>
+
+                <div class="footer-buttons">
+                    <a href="tel:089762772222" class="footer-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M6.6 3.5h3l1.2 4-2 1.7a14.4 14.4 0 0 0 6 6l1.7-2 4 1.2v3c0 .9-.7 1.6-1.6 1.6C11 19 5 13 5 5.1 5 4.2 5.7 3.5 6.6 3.5Z"></path></svg><span>Telepon</span></a>
+                    <a href="mailto:nalahomecare@gmail.com" class="footer-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><rect x="4" y="5" width="16" height="14" rx="1.8"></rect><path d="m5.2 7 6.8 5 6.8-5"></path></svg><span>Email</span></a>
+                    <a href="https://www.nalahomecare.com" class="footer-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="12" cy="12" r="8.5"></circle><path d="M3.7 12h16.6M12 3.5a13.2 13.2 0 0 1 0 17M12 3.5a13.2 13.2 0 0 0 0 17"></path></svg><span>Website</span></a>
                 </div>
             </div>
-        </div>
-    </section>
-
-    <section id="kontak">
-        <div class="container">
-            <h2>Kontak Kami</h2>
-            <p>Untuk informasi lebih lanjut dan pemesanan layanan, silakan menghubungi:</p>
-            <div class="contact-info">
-                <p>📞 0897-6277-2222</p>
-                <p>🌐 www.nalahomecare.com</p>
-                <p>📧 nalahomecare@gmail.com</p>
-                <p>📍 Jln. Cilentah No. 30, Kel. Burangrang, Kec. Lengkong Kota Bandung, Jawa Barat.</p>
-            </div>
-            <div class="footer-buttons">
-                <a href="tel:089762772222" class="footer-btn">📞 Telepon</a>
-                <a href="mailto:nalahomecare@gmail.com" class="footer-btn">📧 Email</a>
-                <a href="https://www.nalahomecare.com" class="footer-btn">🌐 Website</a>
-            </div>
-        </div>
-    </section>
+        </section>
+    </main>
 
     <footer>
         <p>&copy; 2026 Nala Homecare. All Rights Reserved.</p>
     </footer>
 
-    <script>
-        const splash = document.getElementById('splash-screen');
-        const logoWrapper = document.getElementById('btn-masuk-wrapper');
-
-        // Scroll progress bar
-        const progress = document.createElement('div');
-        progress.id = 'page-progress';
-        document.body.appendChild(progress);
-
-        const updateScrollUI = () => {
-            const scrollTop = window.scrollY;
-            const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
-            progress.style.width = `${maxScroll > 0 ? (scrollTop / maxScroll) * 100 : 0}%`;
-            document.querySelector('nav')?.classList.toggle('scrolled', scrollTop > 20);
-        };
-        window.addEventListener('scroll', updateScrollUI, { passive: true });
-        updateScrollUI();
-
-        // Splash interaction
-        const enterSite = () => {
-            if (!splash || splash.classList.contains('entered')) return;
-            logoWrapper?.classList.add('clicked');
-            setTimeout(() => {
-                splash.classList.add('entered');
-                document.body.classList.remove('no-scroll');
-            }, 220);
-            setTimeout(() => splash.remove(), 1500);
-        };
-
-        logoWrapper?.addEventListener('click', enterSite);
-        logoWrapper?.addEventListener('keydown', (event) => {
-            if (event.key === 'Enter' || event.key === ' ') {
-                event.preventDefault();
-                enterSite();
-            }
-        });
-        logoWrapper?.setAttribute('role', 'button');
-        logoWrapper?.setAttribute('tabindex', '0');
-
-        // Intersection-based reveal: content animates in once, with staggered children.
-        const revealTargets = document.querySelectorAll(
-            '#tentang .about-text, #tentang .about-image, #visi-misi .dual-col > div, #gelembung .bubble, #layanan .card, #layanan .service-image, #keunggulan .check-list li, #testimoni .card, #kontak .contact-info, #kontak .footer-buttons'
-        );
-        revealTargets.forEach((el, index) => {
-            el.classList.add('reveal-ready');
-            el.classList.add(`reveal-delay-${(index % 3) + 1}`);
-        });
-
-        const observer = new IntersectionObserver((entries, obs) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('is-visible');
-                    obs.unobserve(entry.target);
-                }
-            });
-        }, { threshold: 0.12, rootMargin: '0px 0px -7% 0px' });
-        revealTargets.forEach(el => observer.observe(el));
-
-        // Active section indicator in the glass navigation.
-        const navLinks = [...document.querySelectorAll('.nav-links a')];
-        const sections = navLinks
-            .map(link => document.querySelector(link.getAttribute('href')))
-            .filter(Boolean);
-        const sectionObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    navLinks.forEach(link => link.classList.toggle('active', link.getAttribute('href') === `#${entry.target.id}`));
-                }
-            });
-        }, { rootMargin: '-35% 0px -55% 0px', threshold: 0 });
-        sections.forEach(section => sectionObserver.observe(section));
-
-        // Lightweight pointer glow on elevated cards for a premium micro-interaction.
-        document.querySelectorAll('.card, .dual-col > div, .hero-card').forEach(card => {
-            card.addEventListener('pointermove', (event) => {
-                const rect = card.getBoundingClientRect();
-                const x = ((event.clientX - rect.left) / rect.width) * 100;
-                const y = ((event.clientY - rect.top) / rect.height) * 100;
-                card.style.setProperty('--mx', `${x}%`);
-                card.style.setProperty('--my', `${y}%`);
-            });
-        });
-    </script>
-
+    <script src="script.js" defer></script>
 </body>
 </html>
