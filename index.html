@@ -3,87 +3,126 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#0b2033">
+    <meta name="theme-color" content="#f7f5ef">
     <meta name="description" content="Nala Homecare - Layanan Kesehatan di Rumah">
     <title>Nala Homecare - Layanan Kesehatan di Rumah</title>
     <link rel="stylesheet" href="styles.css">
 </head>
-<body class="no-scroll">
+<body class="is-locked">
     <div id="splash-screen" aria-label="Nala Homecare">
+        <div class="splash-orbit splash-orbit-one" aria-hidden="true"></div>
+        <div class="splash-orbit splash-orbit-two" aria-hidden="true"></div>
         <div class="splash-content">
-            <div class="logo-wrapper" id="btn-masuk-wrapper">
-                <img id="btn-masuk" src="IMG-20260309-WA0036.jpg" alt="Logo Masuk Nala Homecare">
-            </div>
+            <button class="splash-logo" id="btn-masuk" type="button" aria-label="Ketuk Untuk Masuk">
+                <span class="splash-logo-frame">
+                    <img src="IMG-20260309-WA0036.jpg" alt="Logo Nala Homecare">
+                </span>
+                <span class="splash-logo-halo" aria-hidden="true"></span>
+            </button>
             <p class="splash-text">Ketuk Untuk Masuk</p>
         </div>
     </div>
 
-    <nav aria-label="Navigasi utama">
+    <div class="page-noise" aria-hidden="true"></div>
+    <div class="scroll-progress" id="scroll-progress" aria-hidden="true"></div>
+
+    <nav class="site-nav" aria-label="Navigasi utama">
         <a href="#beranda" class="nav-brand" aria-label="Nala Homecare">
-            <span class="brand-mark" aria-hidden="true"></span>
+            <span class="nav-logo-wrap">
+                <img src="IMG-20260309-WA0036.jpg" alt="Nala Homecare">
+            </span>
             <span class="logo">Nala Homecare</span>
         </a>
-        <ul class="nav-links">
-            <li><a href="#beranda">Beranda</a></li>
-            <li><a href="#tentang">Tentang Kami</a></li>
-            <li><a href="#layanan">Layanan</a></li>
-            <li><a href="#keunggulan">Keunggulan</a></li>
-            <li><a href="#kontak">Kontak</a></li>
-        </ul>
-        <button class="menu-toggle" type="button" aria-label="Buka menu navigasi" aria-expanded="false">
-            <span></span>
+
+        <div class="nav-center">
+            <ul class="nav-links">
+                <li><a href="#beranda">Beranda</a></li>
+                <li><a href="#tentang">Tentang Kami</a></li>
+                <li><a href="#layanan">Layanan</a></li>
+                <li><a href="#keunggulan">Keunggulan</a></li>
+                <li><a href="#kontak">Kontak</a></li>
+            </ul>
+        </div>
+
+        <button class="menu-toggle" type="button" aria-label="Buka menu navigasi" aria-expanded="false" aria-controls="nav-menu">
+            <span></span><span></span>
         </button>
+
+        <div class="mobile-nav-panel" id="nav-menu">
+            <ul class="mobile-nav-links">
+                <li><a href="#beranda">Beranda</a></li>
+                <li><a href="#tentang">Tentang Kami</a></li>
+                <li><a href="#layanan">Layanan</a></li>
+                <li><a href="#keunggulan">Keunggulan</a></li>
+                <li><a href="#kontak">Kontak</a></li>
+            </ul>
+        </div>
     </nav>
 
     <main>
-        <section class="hero" id="beranda">
-            <div class="hero-inner">
-                <div class="hero-copy">
+        <section class="hero section-shell" id="beranda">
+            <div class="hero-grid">
+                <div class="hero-copy reveal reveal-up">
+                    <div class="eyebrow" aria-hidden="true"><span></span><span></span><span></span></div>
                     <h1>Selamat datang di Nala Homecare</h1>
-                    <p>Nala Homecare merupakan layanan kesehatan berbasis kunjungan rumah (home care) yang hadir sebagai solusi praktis, aman, dan terpercaya bagi masyarakat yang membutuhkan perawatan tanpa harus datang ke fasilitas kesehatan. Kami memahami bahwa tidak semua kondisi memungkinkan pasien untuk bepergian, sehingga layanan kesehatan di rumah menjadi pilihan yang lebih nyaman dan efisien.</p>
+                    <p class="hero-lead">Nala Homecare merupakan layanan kesehatan berbasis kunjungan rumah (home care) yang hadir sebagai solusi praktis, aman, dan terpercaya bagi masyarakat yang membutuhkan perawatan tanpa harus datang ke fasilitas kesehatan. Kami memahami bahwa tidak semua kondisi memungkinkan pasien untuk bepergian, sehingga layanan kesehatan di rumah menjadi pilihan yang lebih nyaman dan efisien.</p>
                     <p>Dengan mengedepankan profesionalisme, ketepatan tindakan, serta pendekatan yang humanis, Nala Homecare berkomitmen untuk memberikan pelayanan terbaik demi menunjang kesehatan dan kualitas hidup pasien.</p>
-                    <div class="hero-action">
-                        <a class="btn" href="#layanan">
-                            <span>Lihat Layanan Kami</span>
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true">
-                                <path d="M5 12h13M13 6l6 6-6 6"></path>
-                            </svg>
-                        </a>
-                    </div>
+                    <a class="primary-btn" href="#layanan">
+                        <span>Lihat Layanan Kami</span>
+                        <span class="btn-arrow" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 12h13M13 6l6 6-6 6"></path></svg>
+                        </span>
+                    </a>
+                    <div class="hero-rule" aria-hidden="true"><span></span></div>
                 </div>
 
-                <aside class="hero-panel" aria-hidden="true">
-                    <div class="panel-mark">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
-                            <path d="M12 21s7-4.35 7-10V5l-7-2-7 2v6c0 5.65 7 10 7 10Z"></path>
-                            <path d="M8.5 12.5h7M12 9v7"></path>
-                        </svg>
+                <div class="hero-visual reveal reveal-scale">
+                    <div class="hero-frame hero-frame-back" aria-hidden="true"></div>
+                    <div class="hero-frame hero-frame-main">
+                        <div class="hero-frame-inner">
+                            <img src="hero-homecare.png" alt="Nala Homecare" loading="eager">
+                        </div>
                     </div>
-                    <img src="IMG-20260309-WA0036.jpg" alt="" loading="eager">
-                </aside>
+                    <div class="hero-logo-card" aria-hidden="true">
+                        <img src="IMG-20260309-WA0036.jpg" alt="">
+                    </div>
+                    <div class="hero-spark hero-spark-one" aria-hidden="true"></div>
+                    <div class="hero-spark hero-spark-two" aria-hidden="true"></div>
+                </div>
             </div>
+            <a class="scroll-cue" href="#tentang" aria-label="Gulir ke Tentang Kami">
+                <span class="scroll-line" aria-hidden="true"></span>
+            </a>
         </section>
 
-        <section id="tentang">
-            <div class="container about-row">
-                <div class="about-image">
-                    <img src="11062b_211545baa4174deeb6a41ff73188630b~mv2.jpg" alt="Tentang Kami Nala Homecare" loading="lazy">
+        <section id="tentang" class="section-shell section-white section-about">
+            <div class="container about-grid">
+                <div class="about-media reveal reveal-left">
+                    <div class="image-frame image-frame-large">
+                        <img src="11062b_211545baa4174deeb6a41ff73188630b~mv2.jpg" alt="Tentang Kami Nala Homecare" loading="lazy">
+                    </div>
+                    <div class="about-corner-mark" aria-hidden="true"><span></span><span></span></div>
                 </div>
-                <div class="about-text">
+                <div class="about-copy reveal reveal-up">
+                    <div class="section-kicker">Tentang Kami</div>
                     <h2>Tentang Kami</h2>
                     <p>Nala Homecare adalah penyedia layanan perawatan kesehatan di rumah yang berfokus pada tindakan perawatan dasar yang aman dan efektif. Kami berupaya memberikan pelayanan yang tidak hanya berorientasi pada tindakan medis, tetapi juga memperhatikan kenyamanan, ketenangan, serta kebutuhan individu setiap pasien.</p>
                     <p>Kami percaya bahwa proses perawatan yang dilakukan di lingkungan rumah dapat memberikan dampak positif terhadap pemulihan pasien, baik secara fisik maupun psikologis. Oleh karena itu, setiap layanan kami dilakukan dengan standar operasional yang jelas serta didukung oleh tenaga yang kompeten dan bertanggung jawab.</p>
+                    <div class="copy-divider" aria-hidden="true"></div>
                 </div>
             </div>
         </section>
 
-        <section class="bg-light-blue" id="visi-misi">
-            <div class="container dual-col">
-                <div class="visi">
+        <section id="visi-misi" class="section-shell section-paper">
+            <div class="container philosophy-grid">
+                <div class="philosophy-intro reveal reveal-up">
+                    <div class="decorative-title-line" aria-hidden="true"><span></span></div>
+                </div>
+                <div class="philosophy-card vision-card reveal reveal-up" data-tilt>
                     <h3>Visi</h3>
                     <p>Menjadi layanan home care yang terpercaya, profesional, dan berorientasi pada kualitas pelayanan kesehatan di rumah.</p>
                 </div>
-                <div class="misi">
+                <div class="philosophy-card mission-card reveal reveal-up" data-tilt>
                     <h3>Misi</h3>
                     <ul>
                         <li>Memberikan pelayanan kesehatan yang aman, tepat, dan sesuai standar</li>
@@ -95,114 +134,141 @@
             </div>
         </section>
 
-        <section class="bg-primary-blue text-white" id="gelembung">
-            <div class="container">
-                <h3>Tim Kompeten dan Penuh Kasih Sayang</h3>
-                <div class="image-gallery">
-                    <div class="bubble"><img src="Mengenal-Home-Care-dan-Daftar-Layanan-Serta-Manfaatnya.jpg.webp" alt="Layanan Homecare" loading="lazy"></div>
-                    <div class="bubble"><img src="Seputar-Demam-pada-Anak-Orang-Tua-Wajib-Tahu-scaled.jpg" alt="Demam pada Anak" loading="lazy"></div>
-                    <div class="bubble"><img src="023554800_1533262906-Hati-Hati-5-Penyakit-Ini-Berawal-dari-Demam-By-ArtOfPhotos-Shutterstock.jpg" alt="Penyakit Demam" loading="lazy"></div>
+        <section id="gelembung" class="section-shell section-deep">
+            <div class="container team-section">
+                <div class="section-heading section-heading-light reveal reveal-up">
+                    <div class="section-kicker" aria-hidden="true"><span></span></div>
+                    <h2>Tim Kompeten dan Penuh Kasih Sayang</h2>
+                </div>
+                <div class="team-grid">
+                    <figure class="team-photo team-photo-large reveal reveal-up">
+                        <img src="Mengenal-Home-Care-dan-Daftar-Layanan-Serta-Manfaatnya.jpg.webp" alt="Layanan Homecare" loading="lazy">
+                    </figure>
+                    <figure class="team-photo reveal reveal-up">
+                        <img src="Seputar-Demam-pada-Anak-Orang-Tua-Wajib-Tahu-scaled.jpg" alt="Demam pada Anak" loading="lazy">
+                    </figure>
+                    <figure class="team-photo reveal reveal-up">
+                        <img src="023554800_1533262906-Hati-Hati-5-Penyakit-Ini-Berawal-dari-Demam-By-ArtOfPhotos-Shutterstock.jpg" alt="Penyakit Demam" loading="lazy">
+                    </figure>
                 </div>
             </div>
         </section>
 
-        <section id="layanan">
+        <section id="layanan" class="section-shell section-white section-services">
             <div class="container">
-                <h2>Layanan Kami</h2>
-                <p class="section-subtitle">Kami menyediakan layanan terapi kompres yang dapat membantu mengurangi berbagai keluhan seperti nyeri, pembengkakan, serta peradangan.</p>
+                <div class="section-heading reveal reveal-up">
+                    <div class="section-kicker" aria-hidden="true"><span></span></div>
+                    <h2>Layanan Kami</h2>
+                    <p class="section-subtitle">Kami menyediakan layanan terapi kompres yang dapat membantu mengurangi berbagai keluhan seperti nyeri, pembengkakan, serta peradangan.</p>
+                </div>
 
-                <div class="service-row">
-                    <div class="service-group">
-                        <div class="card">
-                            <h4>1. Kompres Hangat Basah</h4>
-                            <p>Digunakan untuk membantu melancarkan peredaran darah, mengurangi kekakuan otot, serta memberikan efek relaksasi pada area tubuh tertentu.</p>
-                        </div>
-                        <div class="card">
-                            <h4>2. Kompres Hangat Kering</h4>
-                            <p>Berfungsi untuk meredakan ketegangan otot dan memberikan kenyamanan, terutama pada kondisi nyeri ringan hingga sedang.</p>
-                        </div>
-                        <div class="service-image">
+                <div class="service-layout">
+                    <div class="service-feature reveal reveal-left">
+                        <div class="service-feature-image image-frame">
                             <img src="demam pada anak.jpg" alt="Penanganan Demam" loading="lazy">
                         </div>
+                        <div class="service-feature-note">Seluruh tindakan dilakukan dengan memperhatikan standar kebersihan, keamanan, dan prosedur pelayanan yang berlaku.</div>
                     </div>
-
-                    <div class="service-group">
-                        <div class="service-image">
-                            <img src="Seputar-Demam-pada-Anak-Orang-Tua-Wajib-Tahu-scaled.jpg" alt="Edukasi Demam" loading="lazy">
-                        </div>
-                        <div class="card">
-                            <h4>3. Kompres Dingin Basah</h4>
+                    <div class="service-grid">
+                        <article class="service-card reveal reveal-up" data-tilt>
+                            <h3>1. Kompres Hangat Basah</h3>
+                            <p>Digunakan untuk membantu melancarkan peredaran darah, mengurangi kekakuan otot, serta memberikan efek relaksasi pada area tubuh tertentu.</p>
+                        </article>
+                        <article class="service-card reveal reveal-up" data-tilt>
+                            <h3>2. Kompres Hangat Kering</h3>
+                            <p>Berfungsi untuk meredakan ketegangan otot dan memberikan kenyamanan, terutama pada kondisi nyeri ringan hingga sedang.</p>
+                        </article>
+                        <article class="service-card service-card-accent reveal reveal-up" data-tilt>
+                            <h3>3. Kompres Dingin Basah</h3>
                             <p>Digunakan untuk mengurangi pembengkakan dan peradangan, serta membantu meredakan nyeri akibat cedera ringan.</p>
-                        </div>
-                        <div class="card">
-                            <h4>4. Kompres Dingin Kering</h4>
+                        </article>
+                        <article class="service-card reveal reveal-up" data-tilt>
+                            <h3>4. Kompres Dingin Kering</h3>
                             <p>Efektif untuk penanganan awal pada nyeri akut dan kondisi tertentu yang memerlukan penekanan peradangan.</p>
-                        </div>
+                        </article>
                     </div>
                 </div>
-
-                <p class="service-note">Seluruh tindakan dilakukan dengan memperhatikan standar kebersihan, keamanan, dan prosedur pelayanan yang berlaku.</p>
             </div>
         </section>
 
-        <section id="keunggulan" class="bg-primary-blue text-white">
-            <div class="container">
-                <h2>Keunggulan Kami</h2>
-                <ul class="check-list">
-                    <li>Layanan kesehatan langsung ke rumah pasien</li>
-                    <li>Didukung oleh tenaga yang kompeten dan profesional</li>
-                    <li>Prosedur pelayanan yang aman dan terstandar</li>
-                    <li>Proses pemesanan yang mudah dan responsif</li>
-                    <li>Mengutamakan kenyamanan, keamanan, dan kepuasan pasien</li>
-                    <li>Pelayanan yang ramah, cepat, dan terpercaya</li>
+        <section id="keunggulan" class="section-shell section-advantages">
+            <div class="container advantages-layout">
+                <div class="advantages-intro reveal reveal-left">
+                    <div class="section-kicker" aria-hidden="true"><span></span></div>
+                    <h2>Keunggulan Kami</h2>
+                    <div class="advantage-line" aria-hidden="true"><span></span></div>
+                </div>
+                <ul class="check-list reveal reveal-up">
+                    <li><span class="check-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m6 12 4 4 8-8"></path></svg></span><span>Layanan kesehatan langsung ke rumah pasien</span></li>
+                    <li><span class="check-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m6 12 4 4 8-8"></path></svg></span><span>Didukung oleh tenaga yang kompeten dan profesional</span></li>
+                    <li><span class="check-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m6 12 4 4 8-8"></path></svg></span><span>Prosedur pelayanan yang aman dan terstandar</span></li>
+                    <li><span class="check-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m6 12 4 4 8-8"></path></svg></span><span>Proses pemesanan yang mudah dan responsif</span></li>
+                    <li><span class="check-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m6 12 4 4 8-8"></path></svg></span><span>Mengutamakan kenyamanan, keamanan, dan kepuasan pasien</span></li>
+                    <li><span class="check-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m6 12 4 4 8-8"></path></svg></span><span>Pelayanan yang ramah, cepat, dan terpercaya</span></li>
                 </ul>
             </div>
         </section>
 
-        <section id="testimoni" class="bg-light-blue">
+        <section id="testimoni" class="section-shell section-paper testimonials-section">
             <div class="container">
-                <h2>Testimoni Pasien</h2>
-                <p class="section-subtitle">Berikut beberapa pengalaman pasien yang telah menggunakan layanan Nala Homecare:</p>
-                <div class="grid-cards">
-                    <div class="card">
+                <div class="section-heading reveal reveal-up">
+                    <div class="section-kicker" aria-hidden="true"><span></span></div>
+                    <h2>Testimoni Pasien</h2>
+                    <p class="section-subtitle">Berikut beberapa pengalaman pasien yang telah menggunakan layanan Nala Homecare:</p>
+                </div>
+                <div class="testimonial-grid">
+                    <article class="testimonial-card reveal reveal-up" data-tilt>
+                        <span class="quote-mark" aria-hidden="true">“</span>
                         <p>“Pelayanan sangat memuaskan. Petugas datang tepat waktu dan sangat ramah. Setelah melakukan kompres hangat, nyeri yang saya rasakan berkurang secara signifikan.”</p>
                         <span class="author">— Ibu Siti, 45 tahun</span>
-                    </div>
-                    <div class="card">
+                    </article>
+                    <article class="testimonial-card reveal reveal-up" data-tilt>
+                        <span class="quote-mark" aria-hidden="true">“</span>
                         <p>“Saya merasa sangat terbantu dengan adanya layanan ini. Tidak perlu keluar rumah, tapi tetap mendapatkan perawatan yang baik yang profesional.”</p>
                         <span class="author">— Bapak Andi, 52 tahun</span>
-                    </div>
-                    <div class="card">
+                    </article>
+                    <article class="testimonial-card reveal reveal-up" data-tilt>
+                        <span class="quote-mark" aria-hidden="true">“</span>
                         <p>“Pelayanannya cepat dan komunikatif. Prosesnya juga nyaman dan membuat saya lebih tenang selama perawatan.”</p>
                         <span class="author">— Ibu Rina, 38 tahun</span>
-                    </div>
+                    </article>
                 </div>
             </div>
         </section>
 
-        <section id="kontak">
-            <div class="container">
-                <h2>Kontak Kami</h2>
-                <p>Untuk informasi lebih lanjut dan pemesanan layanan, silakan menghubungi:</p>
-
-                <div class="contact-info">
-                    <p><span class="icon-shell" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M6.6 3.5h3l1.2 4-2 1.7a14.4 14.4 0 0 0 6 6l1.7-2 4 1.2v3c0 .9-.7 1.6-1.6 1.6C11 19 5 13 5 5.1 5 4.2 5.7 3.5 6.6 3.5Z"></path></svg></span>0897-6277-2222</p>
-                    <p><span class="icon-shell" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="8.5"></circle><path d="M3.7 12h16.6M12 3.5a13.2 13.2 0 0 1 0 17M12 3.5a13.2 13.2 0 0 0 0 17"></path></svg></span>www.nalahomecare.com</p>
-                    <p><span class="icon-shell" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 5.5A1.5 1.5 0 0 1 5.5 4h13A1.5 1.5 0 0 1 20 5.5v9A1.5 1.5 0 0 1 18.5 16H9l-4.5 4V5.5Z"></path><path d="m7 7 5 4 5-4"></path></svg></span>nalahomecare@gmail.com</p>
-                    <p><span class="icon-shell" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 20s6-5.1 6-10A6 6 0 1 0 6 10c0 4.9 6 10 6 10Z"></path><circle cx="12" cy="10" r="2"></circle></svg></span>Jln. Cilentah No. 30, Kel. Burangrang, Kec. Lengkong Kota Bandung, Jawa Barat.</p>
+        <section id="kontak" class="section-shell contact-section">
+            <div class="contact-backdrop" aria-hidden="true"></div>
+            <div class="container contact-layout">
+                <div class="contact-copy reveal reveal-left">
+                    <div class="section-kicker section-kicker-light" aria-hidden="true"><span></span></div>
+                    <h2>Kontak Kami</h2>
+                    <p>Untuk informasi lebih lanjut dan pemesanan layanan, silakan menghubungi:</p>
                 </div>
-
-                <div class="footer-buttons">
-                    <a href="tel:089762772222" class="footer-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M6.6 3.5h3l1.2 4-2 1.7a14.4 14.4 0 0 0 6 6l1.7-2 4 1.2v3c0 .9-.7 1.6-1.6 1.6C11 19 5 13 5 5.1 5 4.2 5.7 3.5 6.6 3.5Z"></path></svg><span>Telepon</span></a>
-                    <a href="mailto:nalahomecare@gmail.com" class="footer-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><rect x="4" y="5" width="16" height="14" rx="1.8"></rect><path d="m5.2 7 6.8 5 6.8-5"></path></svg><span>Email</span></a>
-                    <a href="https://www.nalahomecare.com" class="footer-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="12" cy="12" r="8.5"></circle><path d="M3.7 12h16.6M12 3.5a13.2 13.2 0 0 1 0 17M12 3.5a13.2 13.2 0 0 0 0 17"></path></svg><span>Website</span></a>
+                <div class="contact-panel reveal reveal-up">
+                    <div class="contact-info">
+                        <p><span class="icon-shell" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M6.6 3.5h3l1.2 4-2 1.7a14.4 14.4 0 0 0 6 6l1.7-2 4 1.2v3c0 .9-.7 1.6-1.6 1.6C11 19 5 13 5 5.1 5 4.2 5.7 3.5 6.6 3.5Z"></path></svg></span><span>0897-6277-2222</span></p>
+                        <p><span class="icon-shell" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="8.5"></circle><path d="M3.7 12h16.6M12 3.5a13.2 13.2 0 0 1 0 17M12 3.5a13.2 13.2 0 0 0 0 17"></path></svg></span><span>www.nalahomecare.com</span></p>
+                        <p><span class="icon-shell" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 5.5A1.5 1.5 0 0 1 5.5 4h13A1.5 1.5 0 0 1 20 5.5v9A1.5 1.5 0 0 1 18.5 16H9l-4.5 4V5.5Z"></path><path d="m7 7 5 4 5-4"></path></svg></span><span>nalahomecare@gmail.com</span></p>
+                        <p><span class="icon-shell" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 20s6-5.1 6-10A6 6 0 1 0 6 10c0 4.9 6 10 6 10Z"></path><circle cx="12" cy="10" r="2"></circle></svg></span><span>Jln. Cilentah No. 30, Kel. Burangrang, Kec. Lengkong Kota Bandung, Jawa Barat.</span></p>
+                    </div>
+                    <div class="footer-buttons">
+                        <a href="tel:089762772222" class="footer-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M6.6 3.5h3l1.2 4-2 1.7a14.4 14.4 0 0 0 6 6l1.7-2 4 1.2v3c0 .9-.7 1.6-1.6 1.6C11 19 5 13 5 5.1 5 4.2 5.7 3.5 6.6 3.5Z"></path></svg><span>Telepon</span></a>
+                        <a href="mailto:nalahomecare@gmail.com" class="footer-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><rect x="4" y="5" width="16" height="14" rx="1.8"></rect><path d="m5.2 7 6.8 5 6.8-5"></path></svg><span>Email</span></a>
+                        <a href="https://www.nalahomecare.com" class="footer-btn" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="12" cy="12" r="8.5"></circle><path d="M3.7 12h16.6M12 3.5a13.2 13.2 0 0 1 0 17M12 3.5a13.2 13.2 0 0 0 0 17"></path></svg><span>Website</span></a>
+                    </div>
                 </div>
             </div>
         </section>
     </main>
 
-    <footer>
-        <p>&copy; 2026 Nala Homecare. All Rights Reserved.</p>
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <a href="#beranda" class="footer-brand" aria-label="Nala Homecare">
+                <span class="footer-logo"><img src="IMG-20260309-WA0036.jpg" alt=""></span>
+                <span>Nala Homecare</span>
+            </a>
+            <p>&copy; 2026 Nala Homecare. All Rights Reserved.</p>
+        </div>
     </footer>
 
     <script src="script.js" defer></script>
