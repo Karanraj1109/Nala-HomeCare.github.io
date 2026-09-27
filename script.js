@@ -1,138 +1,159 @@
-(() => {
+/**
+ * Nala Homecare - Premium Interaction Script
+ * Optimizes performance using IntersectionObserver and semantic DOM interactions.
+ */
+
+document.addEventListener('DOMContentLoaded', () => {
     'use strict';
 
     const body = document.body;
-    const splash = document.getElementById('splash-screen');
-    const splashButton = document.getElementById('btn-masuk');
     const nav = document.querySelector('.site-nav');
     const menuToggle = document.querySelector('.menu-toggle');
-    const progress = document.getElementById('scroll-progress');
-    const desktopLinks = [...document.querySelectorAll('.nav-links a')];
-    const mobileLinks = [...document.querySelectorAll('.mobile-nav-links a')];
-    const allNavLinks = [...desktopLinks, ...mobileLinks];
-    const sections = desktopLinks
-        .map((link) => document.querySelector(link.getAttribute('href')))
-        .filter(Boolean);
+    const mobilePanel = document.querySelector('.mobile-nav-panel');
+    const splashScreen = document.getElementById('splash-screen');
+    const btnMasuk = document.getElementById('btn-masuk');
+    const navLinksDesktop = document.querySelectorAll('.nav-links a');
+    const navLinksMobile = document.querySelectorAll('.mobile-nav-links a');
+    const allLinks = [...navLinksDesktop, ...navLinksMobile];
 
-    let scrollTicking = false;
-    let lastScrollY = window.scrollY;
-    let splashClosed = false;
-
-    const updateScrollUI = () => {
-        const scrollY = window.scrollY;
-        const doc = document.documentElement;
-        const maxScroll = Math.max(doc.scrollHeight - window.innerHeight, 1);
-        if (progress) progress.style.width = `${Math.min((scrollY / maxScroll) * 100, 100)}%`;
-        nav?.classList.toggle('is-scrolled', scrollY > 24);
-
-        if (window.innerWidth > 1080) {
-            const delta = scrollY - lastScrollY;
-            if (scrollY > 160 && delta > 5) nav?.classList.add('nav-hidden');
-            if (delta < -5 || scrollY < 80) nav?.classList.remove('nav-hidden');
-        } else {
-            nav?.classList.remove('nav-hidden');
+    // --- 1. Navbar Scroll Effect ---
+    const handleScroll = () => {
+        if (nav) {
+            nav.classList.toggle('is-scrolled', window.scrollY > 50);
         }
-
-        lastScrollY = scrollY;
-        scrollTicking = false;
     };
 
+    // Throttle scroll event for performance
+    let isScrolling = false;
     window.addEventListener('scroll', () => {
-        if (scrollTicking) return;
-        scrollTicking = true;
-        window.requestAnimationFrame(updateScrollUI);
-    }, { passive: true });
-    updateScrollUI();
-
-    const closeMenu = () => {
-        nav?.classList.remove('menu-open');
-        menuToggle?.classList.remove('is-open');
-        menuToggle?.setAttribute('aria-expanded', 'false');
-    };
-
-    menuToggle?.addEventListener('click', () => {
-        const isOpen = nav?.classList.toggle('menu-open') ?? false;
-        menuToggle.classList.toggle('is-open', isOpen);
-        menuToggle.setAttribute('aria-expanded', String(isOpen));
-    });
-
-    mobileLinks.forEach((link) => link.addEventListener('click', closeMenu));
-    document.addEventListener('click', (event) => {
-        if (!nav?.classList.contains('menu-open')) return;
-        if (!(event.target instanceof Node) || nav.contains(event.target)) return;
-        closeMenu();
-    });
-
-    const closeSplash = () => {
-        if (!splash || splashClosed) return;
-        splashClosed = true;
-        splash.classList.add('is-leaving');
-        body.classList.remove('is-locked');
-        window.setTimeout(() => splash.remove(), 900);
-    };
-
-    splashButton?.addEventListener('click', closeSplash);
-    splashButton?.addEventListener('keydown', (event) => {
-        if (event.key === 'Enter' || event.key === ' ') {
-            event.preventDefault();
-            closeSplash();
+        if (!isScrolling) {
+            window.requestAnimationFrame(() => {
+                handleScroll();
+                isScrolling = false;
+            });
+            isScrolling = true;
         }
-    });
+    }, { passive: true });
 
-    window.setTimeout(closeSplash, 5200);
-    if (!splash) body.classList.remove('is-locked');
+    // Trigger once on load
+    handleScroll();
 
-    const revealElements = document.querySelectorAll('.reveal');
-    if ('IntersectionObserver' in window) {
-        const revealObserver = new IntersectionObserver((entries, observer) => {
-            entries.forEach((entry) => {
-                if (!entry.isIntersecting) return;
-                entry.target.classList.add('is-visible');
-                observer.unobserve(entry.target);
-            });
-        }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
-        revealElements.forEach((element) => revealObserver.observe(element));
+    // --- 2. Mobile Menu Toggle ---
+    const closeMenu = () => {
+        if (!menuToggle || !mobilePanel) return;
+        menuToggle.classList.remove('is-open');
+        mobilePanel.classList.remove('is-open');
+        menuToggle.setAttribute('aria-expanded', 'false');
+        body.style.overflow = body.classList.contains('is-locked') ? 'hidden' : '';
+    };
 
-        const sectionObserver = new IntersectionObserver((entries) => {
-            entries.forEach((entry) => {
-                if (!entry.isIntersecting) return;
-                desktopLinks.forEach((link) => {
-                    link.classList.toggle('active', link.getAttribute('href') === `#${entry.target.id}`);
-                });
-            });
-        }, { rootMargin: '-38% 0px -50% 0px', threshold: 0 });
-        sections.forEach((section) => sectionObserver.observe(section));
-    } else {
-        revealElements.forEach((element) => element.classList.add('is-visible'));
-    }
+    if (menuToggle && mobilePanel) {
+        menuToggle.addEventListener('click', () => {
+            const isOpen = menuToggle.classList.toggle('is-open');
+            mobilePanel.classList.toggle('is-open');
+            menuToggle.setAttribute('aria-expanded', String(isOpen));
 
-    // Lightweight pointer depth: enabled only on capable desktop pointers.
-    const canTilt = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
-    if (canTilt) {
-        document.querySelectorAll('[data-tilt]').forEach((card) => {
-            const reset = () => {
-                card.style.setProperty('--rx', '0deg');
-                card.style.setProperty('--ry', '0deg');
-            };
-            card.addEventListener('pointermove', (event) => {
-                const rect = card.getBoundingClientRect();
-                const x = (event.clientX - rect.left) / rect.width;
-                const y = (event.clientY - rect.top) / rect.height;
-                const ry = (x - 0.5) * 4;
-                const rx = (0.5 - y) * 4;
-                card.style.setProperty('--rx', `${rx.toFixed(2)}deg`);
-                card.style.setProperty('--ry', `${ry.toFixed(2)}deg`);
-            });
-            card.addEventListener('pointerleave', reset);
-            card.addEventListener('pointercancel', reset);
+            // Lock body scroll when menu is open
+            body.style.overflow = isOpen ? 'hidden' : (body.classList.contains('is-locked') ? 'hidden' : '');
+        });
+
+        // Close menu when clicking a link
+        navLinksMobile.forEach(link => {
+            link.addEventListener('click', closeMenu);
+        });
+
+        // Close menu with Escape
+        document.addEventListener('keydown', event => {
+            if (event.key === 'Escape' && mobilePanel.classList.contains('is-open')) {
+                closeMenu();
+                menuToggle.focus();
+            }
         });
     }
 
-    // Prevent double activation when users use the browser back button on mobile menus.
-    window.addEventListener('resize', () => {
-        if (window.innerWidth > 1080) closeMenu();
-    }, { passive: true });
+    // --- 3. Splash Screen Logic ---
+    const dismissSplash = () => {
+        if (!splashScreen || splashScreen.classList.contains('is-leaving')) return;
 
-    // Mark the first visible section on load.
-    if (sections[0]) desktopLinks[0]?.classList.add('active');
-})();
+        splashScreen.classList.add('is-leaving');
+        body.classList.remove('is-locked');
+        if (!mobilePanel || !mobilePanel.classList.contains('is-open')) {
+            body.style.overflow = '';
+        }
+
+        // Remove from DOM after transition completes for clean DOM
+        window.setTimeout(() => {
+            splashScreen.remove();
+        }, 800);
+    };
+
+    if (btnMasuk) {
+        btnMasuk.addEventListener('click', dismissSplash);
+    }
+
+    // Fallback: Auto close after 4.5 seconds for UX safety
+    window.setTimeout(dismissSplash, 4500);
+
+    // --- 4. Premium Scroll Reveal (IntersectionObserver) ---
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const revealElements = document.querySelectorAll('.reveal-up, .reveal-fade, .reveal-left, .reveal-right');
+
+    if ('IntersectionObserver' in window && !prefersReducedMotion) {
+        const revealOptions = {
+            root: null,
+            rootMargin: '0px 0px -10% 0px',
+            threshold: 0.1
+        };
+
+        const revealCallback = (entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    observer.unobserve(entry.target); // Only animate once
+                }
+            });
+        };
+
+        const revealObserver = new IntersectionObserver(revealCallback, revealOptions);
+        revealElements.forEach(el => revealObserver.observe(el));
+    } else {
+        // Fallback for older browsers or reduced-motion preference
+        revealElements.forEach(el => {
+            el.classList.add('is-visible');
+        });
+    }
+
+    // --- 5. Active Nav Link Highlighter ---
+    const sections = document.querySelectorAll('section[id]');
+    const navSections = [...sections].filter(section =>
+        allLinks.some(link => link.getAttribute('href') === `#${section.id}`)
+    );
+
+    const setActiveLink = id => {
+        allLinks.forEach(link => {
+            link.classList.toggle('active', link.getAttribute('href') === `#${id}`);
+        });
+    };
+
+    if ('IntersectionObserver' in window) {
+        const activeNavOptions = {
+            root: null,
+            rootMargin: '-20% 0px -70% 0px',
+            threshold: 0
+        };
+
+        const activeNavCallback = entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    setActiveLink(entry.target.id);
+                }
+            });
+        };
+
+        const navObserver = new IntersectionObserver(activeNavCallback, activeNavOptions);
+        navSections.forEach(section => navObserver.observe(section));
+    } else {
+        // Simple fallback when IntersectionObserver is unavailable
+        setActiveLink('beranda');
+    }
+});
